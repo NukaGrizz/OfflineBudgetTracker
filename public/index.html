@@ -21,7 +21,7 @@
 
     <div class="form">
       <input type="text" id="t-name" placeholder="Name of transaction" />
-      <input type="number" min="0" id="t-amount" placeholder="Transaction amount" />
+      <input type="number" min="0" id="t-amount" placeholder="transaction amount" />
       <button id="add-btn"><i class="fa fa-plus buttons"></i> Add Funds</button>
       <button id="sub-btn"><i class="fa fa-minus"></i> Subtract Funds</button>
       <p class="error"></p>
@@ -30,7 +30,7 @@
     <div class="transactions">
       <table>
         <thead>
-          <th>Transaction</th>
+          <th>transaction</th>
           <th>Amount</th>
         </thead>
         <tbody id="tbody">
@@ -47,10 +47,11 @@
   <script src="js/idb.js"></script>
 </body>
 
-<script>
+<script type="text/javascript">
   (function() {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("./service-worker.js")
+      navigator.serviceWorker
+              .register("./service-worker.js")
               .then(() => console.log("Service Worker registered successfully."))
               .catch(error =>
                       console.log("Service Worker registration failed:", error)

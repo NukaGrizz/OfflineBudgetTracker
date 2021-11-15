@@ -1,31 +1,40 @@
+let db;
 const request = indexedDB.open('budget', 1);
 
 request.onupgradeneeded = function(event) {
+  // save a reference to the database
   const db = event.target.result;
   db.createObjectStore('new_budget', { autoIncrement: true });
 };
 
 request.onsuccess = function(event) {
   db = event.target.result;
+
   if (navigator.onLine) {
     uploadtransactions();
   }
 };
 
 request.onerror = function(event) {
+  // log error here
   console.log(event.target.errorCode);
 };
 
 function saveRecord(record) {
   const transaction = db.transaction(['new_budget'], 'readwrite');
+
   const budgetObjectStore = transaction.objectStore('new_budget');
+
   budgetObjectStore.add(record);
 }
 
 function uploadtransactions() {
   const transaction = db.transaction(['new_budget'], 'readwrite');
+
   const budgetObjectStore = transaction.objectStore('new_budget');
+
   const getAll = budgetObjectStore.getAll();
+
   getAll.onsuccess = function() {
     if (getAll.result.length > 0) {
       fetch('/api/transaction/bulk', {
@@ -45,6 +54,7 @@ function uploadtransactions() {
           const transaction = db.transaction(['new_budget'], 'readwrite');
           const budgetObjectStore = transaction.objectStore('new_budget');
           budgetObjectStore.clear();
+
         })
         .catch(err => {
           console.log(err);
